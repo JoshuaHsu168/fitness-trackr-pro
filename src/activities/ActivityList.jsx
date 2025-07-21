@@ -1,6 +1,7 @@
 import { useAuth } from "../auth/AuthContext";
 import useQuery from "../api/useQuery";
-import useMutation from "../api/useMutation";
+// import useMutation from "../api/useMutation"; // DELETE THIS IMPORT (no longer deleting from here)
+import { Link } from "react-router-dom"; // IMPORT Link
 
 /** Shows a list of activities. */
 export default function ActivityList() {
@@ -22,23 +23,28 @@ export default function ActivityList() {
   );
 }
 
-/** Shows a single activity. Logged-in users will also see a delete button. */
+/** Shows a single activity. Now links to its detail page. */
 function ActivityListItem({ activity }) {
-  const { token } = useAuth();
-  const {
-    mutate: deleteActivity,
-    loading,
-    error,
-  } = useMutation("DELETE", "/activities/" + activity.id, ["activities"]);
+  // const { token } = useAuth(); // No longer needed here
+  // const {
+  //   mutate: deleteActivity,
+  //   loading,
+  //   error,
+  // } = useMutation("DELETE", "/activities/" + activity.id, ["activities"]); // DELETE THIS MUTATION
 
   return (
     <li>
-      <p>{activity.name}</p>
-      {token && (
+      {/* Link to the individual activity details page */}
+      <Link to={`/activities/${activity.id}`}>
+        <p>{activity.name}</p>
+      </Link>
+      <p>{activity.description}</p> {/* Add description here for visibility */}
+      {/* REMOVE THE DELETE BUTTON FROM HERE */}
+      {/* {token && (
         <button onClick={() => deleteActivity()}>
           {loading ? "Deleting" : error ? error : "Delete"}
         </button>
-      )}
+      )} */}
     </li>
   );
 }

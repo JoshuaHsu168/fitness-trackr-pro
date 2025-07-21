@@ -6,16 +6,20 @@ import Layout from "./layout/Layout";
 
 import { AuthProvider } from "./auth/AuthContext";
 import { ApiProvider } from "./api/ApiContext";
-import { PageProvider } from "./layout/PageContext";
+// import { PageProvider } from "./layout/PageContext"; // DELETE THIS IMPORT
+import { BrowserRouter } from "react-router-dom"; // IMPORT BrowserRouter
 
 createRoot(document.getElementById("root")).render(
-  <AuthProvider>
-    <ApiProvider>
-      <PageProvider>
-        <Layout>
-          <App />
-        </Layout>
-      </PageProvider>
-    </ApiProvider>
-  </AuthProvider>,
+  <StrictMode>
+    <AuthProvider>
+      <ApiProvider>
+        {/* Wrap Layout and App within BrowserRouter */}
+        <BrowserRouter>
+          <Layout>
+            <App />
+          </Layout>
+        </BrowserRouter>
+      </ApiProvider>
+    </AuthProvider>
+  </StrictMode>
 );
